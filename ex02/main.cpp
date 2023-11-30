@@ -1,4 +1,5 @@
 #include "PmergeMe.hpp"
+#include <sys/time.h>
 
 int main(int c, char **v)
 {
@@ -6,16 +7,18 @@ int main(int c, char **v)
     {
         if (c < 2)
             throw std::runtime_error("Error : no numbers set yet!");
-        clock_t         time;
-        Serializer<std::vector<unsigned int > > merge1;
-        Serializer<std::deque<unsigned int > >  merge2;
+        PmergeMe<std::vector<unsigned int > > merge1;
+        PmergeMe<std::deque<unsigned int > >  merge2;
+        timeval start;
+        timeval end;
+        double  time;
         for (int i = 1; i < c; i++)
         {
             for (unsigned int j = 0; v[i][j]; j++)
                 if (!std::isdigit(v[i][j]))
                     throw std::runtime_error("Error : no numbers set yet!");
         }
-        time = clock();
+        gettimeofday(&start, NULL);
         for (int i = 1; i < c; i++)
             merge1.push(std::stoi(v[i]));
         std::cout<<"Before: ";
@@ -23,12 +26,16 @@ int main(int c, char **v)
         merge1.sort();
         std::cout<<"After: ";
         merge1.display();
-        std::cout<<"Time to process a range of "<<c - 1<<" elements with std::vector : "<<((float)clock() - time)/ 1000<<" us"<<std::endl;
-        time = clock();
+        gettimeofday(&end, NULL);
+        time = (end.tv_sec - start.tv_sec) * 1000000 + (end.tv_usec - end.tv_usec);
+        std::cout<<"Time to process a range of "<<c - 1<<" elements with std::vector : "<<time<<" us"<<std::endl;
+        gettimeofday(&start, NULL);
         for (int i = 1; i < c; i++)
             merge2.push(std::stoi(v[i]));
         merge2.sort();
-        std::cout<<"Time to process a range of "<<c - 1<<" elements with std::deque : "<<((float)clock() - time)/ 1000<<" us"<<std::endl;
+        gettimeofday(&end, NULL);
+        time = (end.tv_sec - start.tv_sec) * 1000000 + (end.tv_usec - end.tv_usec);
+        std::cout<<"Time to process a range of "<<c - 1<<" elements with std::deque : "<<time<<" us"<<std::endl;
     }
     catch (const std::exception& e)
     {

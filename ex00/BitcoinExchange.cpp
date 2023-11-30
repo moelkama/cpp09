@@ -30,6 +30,17 @@ btc&    btc::operator=(const btc& other)
 btc::~btc()
 {}
 
+size_t  ft_count(std::string str, char c)
+{
+    size_t  count;
+    size_t  i;
+
+    for (i = 0; str[i]; i++)
+        if (str[i] == c)
+            count++;
+    return (count);
+}
+
 bool    for_all(std::string str, int ft(int))
 {
     for (unsigned int i = 0; str[i]; i++)
@@ -37,6 +48,7 @@ bool    for_all(std::string str, int ft(int))
             return (0);
     return (1);
 }
+
 
 void    btc::check_date(std::string date, std::string bad)
 {
@@ -46,7 +58,7 @@ void    btc::check_date(std::string date, std::string bad)
     std::string day;
     size_t      first;
 
-    if (std::count(date.begin(), date.end(), '-') != 2)
+    if (ft_count(date, '-') != 2)
         throw   (std::logic_error(bad));
     first = date.find('-');
     year = date.substr(0, first);
@@ -104,7 +116,7 @@ void    btc::read_line(std::string line)
     std::string value;
     float       d_v;
 
-    if (line.empty() || std::count(line.begin(), line.end(), '|') != 1)
+    if (line.empty() || ft_count(line, '|') != 1)
         throw   std::logic_error(bad);
     date = line.substr(0, line.find('|') - 1);
     check_date(date, bad);

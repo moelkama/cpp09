@@ -5,7 +5,7 @@
 #include <algorithm>
 
 template    <typename T>
-class Serializer
+class PmergeMe
 {
 private:
     std::vector<std::pair<unsigned int, unsigned int> > pairs;
@@ -13,8 +13,15 @@ private:
     T   merge;
     T   largest;
     T   grandest;
-    Serializer(const Serializer& other){*this = other;}
-    Serializer& operator=(const Serializer& other){(void)other; return (*this);}
+    PmergeMe(const PmergeMe& other)
+    {
+        *this = other;
+    }
+    PmergeMe& operator=(const PmergeMe& other)
+    {
+        (void)other;
+        return (*this);
+    }
 public:
     void    to_pairs()
     {
@@ -84,9 +91,9 @@ public:
         }
         std::cout<<std::endl;
     }
-    Serializer()
+    PmergeMe()
     {
         last.second = false;
     }
-    ~Serializer(){}
+    ~PmergeMe(){}
 };
