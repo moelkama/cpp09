@@ -32,7 +32,7 @@ btc::~btc()
 
 size_t  ft_count(std::string str, char c)
 {
-    size_t  count;
+    size_t  count = 0;
     size_t  i;
 
     for (i = 0; str[i]; i++)
@@ -89,6 +89,8 @@ std::string    btc::is_float(std::string str)
     for (unsigned int i = 1; i < str.size(); i++)
         if (float_characters.find(str[i]) == std::string::npos)
             throw   std::logic_error("is not a float number!");
+    if (ft_count(str, '.') > 1)
+        throw   std::logic_error("is not a float number!");
     if (str[0] == '-')
         throw   std::logic_error("not a positive number.");
     else if (str[0] == '+')

@@ -3,6 +3,7 @@
 #include <vector>
 #include <deque>
 #include <algorithm>
+#include <sys/time.h>
 
 template    <typename T>
 class PmergeMe
@@ -97,3 +98,5 @@ public:
     }
     ~PmergeMe(){}
 };
+
+void    merge_sort(int c, char **v);
